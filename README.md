@@ -23,6 +23,7 @@ REST api for a web app that manages attendance.
 | `Add User` | `addUser.php` | `name, email, password` |
 | `User Login` | `userLogin.php` | `email, password` |
 | `Submit Attendance` | `submitAttendance.php` | `class, section, teacher, roll, absent` |
+| `Admin Login` | `adminLogin.php` | `username, password` |
 
 
 
