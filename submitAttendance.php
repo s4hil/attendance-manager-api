@@ -6,7 +6,7 @@
 
 	$data = json_decode(file_get_contents("php://input"), true);
 	
-	if (!empty($data) || 1==1) {
+	if (!empty($data)) {
 
 		$date = date('d-m-Y');
 		$class = clean($data['class']);

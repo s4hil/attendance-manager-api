@@ -1,30 +1,33 @@
 <?php
 	header("Content-Type: application/json");
 	header('Access-Control-Allow-Origin: *');
-	include_once 'coreFuns.php';
+	include 'coreFuns.php';
 	$response = array();
 
 	$data = json_decode(file_get_contents("php://input"), true);
+	
+	if (!empty($data) || 1==1) {
 
-	if (!empty($data)) {
-		$username = clean($data['username']);
-		$password = clean($data['password']);
-		
-		$sql = "SELECT * FROM `_admins` WHERE `username` = '$username' AND `password` = '$password'";
+		$date = clean($data['date']);
+
+		$sql = "SELECT * FROM `_submissions` WHERE `date` = '$date'";
 		$res = $db->query($sql);
-		if ($sql) {
-			if ($res->fetchArray() == true) {
+		if ($res) {
+			while ($row = $res->fetchArray(SQLITE3_ASSOC)) {
+				$rows[] = $row;
+			}
+			if (count($rows) != 0) {
 				$response['status'] = true;
-				$response['msg'] = "Logged In!";
+				$response['data'] = $rows;
 			}
 			else {
 				$response['status'] = false;
-				$response['msg'] = "Invalid Credentials!";
+				$response['msg'] = "No Entries Found!";
 			}
 		}
 		else {
 			$response['status'] = false;
-			$response['msg'] = "Not Logged In!";
+			$response['msg'] = "Query Failed!";
 		}
 	}
 	else {
